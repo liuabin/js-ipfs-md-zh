@@ -34,11 +34,19 @@
 
 We've come a long way, but this project is still in Alpha, lots of development is happening, API might change, beware of the Dragons 🐉..
 
+我们已经走了很远，但这个项目仍处于α-测试中，正在构建的过程中，API可能会发程变化，注意龙🐉..
+
 **Want to get started?** Check our [examples folder](/examples) to learn how to spawn an IPFS node in Node.js and in the Browser.
+
+**想要立即开始？** 打开我们的[examples folder](/examples)来学习如何在Node.js和浏览器中生成一个IPFS节点。
 
 **Please read this:** The [DHT](https://en.wikipedia.org/wiki/Distributed_hash_table), a fundamental piece for automatic content and peer discovery is not yet complete. There are multiple applications that can be built without this service but nevertheless it is fundamental to getting that magic IPFS experience. The current status is that implementation is done and merged and we're working on performance issues. Expect the DHT to be available in a release very soon.
 
+**请注意：** [DHT](https://en.wikipedia.org/wiki/Distributed_hash_table)，一个基础的用以自动寻内容和节点发现的`组件`至今还没有完善。有许多应用不借助这一服务构建，但它确实是在取得魔法般的IPFS体验中的基础部分。现在的情况是功能已经实现并且合并，我们正在解决各种issues。期待DHT能在最近的release中可用。
+
 [**`Weekly Core Implementations Call`**](https://github.com/ipfs/team-mgmt/issues/992)
+
+[**`每周核心实现的电话会议`**](https://github.com/ipfs/team-mgmt/issues/992)
 
 ## Tech Lead
 
@@ -52,13 +60,13 @@ We've come a long way, but this project is still in Alpha, lots of development i
 
 - [Tech Lead](#tech-lead)
 - [Lead Maintainer](#lead-maintainer)
-- [Table of Contents](#table-of-contents)
-- [Install](#install)
+- [目录](#table-of-contents)
+- [安装](#install)
   - [npm](#npm)
   - [Use in Node.js](#use-in-nodejs)
   - [Through command line tool](#through-command-line-tool)
   - [Use in the browser](#use-in-the-browser)
-- [Usage](#usage)
+- [使用](#usage)
   - [IPFS CLI](#ipfs-cli)
   - [IPFS Daemon](#ipfs-daemon)
   - [IPFS Module](#ipfs-module)
@@ -122,13 +130,15 @@ We've come a long way, but this project is still in Alpha, lots of development i
 
 ### npm
 
-This project is available through [npm](https://www.npmjs.com/). To install, run:
+通过[npm](https://www.npmjs.com/)安装：
 
 ```bash
 > npm install ipfs
 ```
 
 JS IPFS depends on native modules that are installed by [`node-gyp`](https://github.com/nodejs/node-gyp). If you have problems running the command above, it is likely that the [build tools required by `node-gyp`](https://github.com/nodejs/node-gyp#installation) are missing from your system. Please install them and then try again.
+
+JS IPFS 依赖于native modules（使用[`node-gyp`](https://github.com/nodejs/node-gyp)安装）。如果你在以上command中有任何问题，很大的可能是[build tools required by `node-gyp`](https://github.com/nodejs/node-gyp#installation)并不存在于你的系统中。请安装它们并重试。
 
 We support both the Current and Active LTS versions of Node.js. Please see [nodejs.org](https://nodejs.org/) for what these currently are.
 
