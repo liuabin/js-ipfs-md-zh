@@ -144,9 +144,11 @@ We support both the Current and Active LTS versions of Node.js. Please see [node
 
 This project is tested on macOS, Linux and Windows.
 
+这个项目在macOS, Linux和Windows上均通过了测试。
+
 ### Use in Node.js
 
-To create an IPFS node programmatically:
+用代码创建IPFS节点：
 
 ```js
 const IPFS = require('ipfs')
@@ -160,17 +162,28 @@ const node = await IPFS.create()
 
 In order to use js-ipfs as a CLI, you must install it with the `global` flag. Run the following (even if you have ipfs installed locally):
 
+为了使用js-ipfs作为一个命令行工具，必须通过`global`全局安装。运行以下命令（即使你已经在工作区安装ipfs）：[译者注：在中国大陆建议使用cnpm或淘宝镜像，确保IPFS模块的完整安装]
+
 ```bash
 npm install ipfs --global
+
+# short commamd
+npm install ipfs -g
 ```
 
 The CLI is available by using the command `jsipfs` in your terminal. This is aliased, instead of using `ipfs`, to make sure it does not conflict with the [Go implementation](https://github.com/ipfs/go-ipfs).
+
+命令行工具已经可以通过`jsipfs`命令使用。为避免混淆，不使用`ipfs`命令，确保不会与[Go 实现的IPFS](https://github.com/ipfs/go-ipfs)产生冲突。
 
 ### Use in the browser
 
 Learn how to bundle with browserify and webpack in the [`examples`](https://github.com/ipfs/js-ipfs/tree/master/examples) folder.
 
+在[`examples`](https://github.com/ipfs/js-ipfs/tree/master/examples)中学习如何使用browserify和webpack打包。
+
 You can also load it using a `<script>` using the [unpkg](https://unpkg.com) CDN **or** the [jsDelivr](https://www.jsdelivr.com/package/npm/ipfs) CDN. Inserting one of the following lines will make an `Ipfs` object available in the global namespace.
+
+你同样可以通过`<script>`加载[unpkg](https://unpkg.com) CDN **或** [jsDelivr](https://www.jsdelivr.com/package/npm/ipfs) CDN的ipfs脚本。插入以下任意一行，会使得`Ipfs`对象在全局空间中可用。
 
 ```html
 <!-- loading the minified version using unpkg -->
@@ -188,8 +201,7 @@ You can also load it using a `<script>` using the [unpkg](https://unpkg.com) CDN
 <!-- loading the human-readable (not minified) version jsDelivr -->
 <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.js"></script>
 ```
-
-Inserting one of the above lines will make an `Ipfs` object available in the global namespace:
+示例
 
 ```html
 <script>
