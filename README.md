@@ -34,7 +34,7 @@
 
 We've come a long way, but this project is still in Alpha, lots of development is happening, API might change, beware of the Dragons 🐉..
 
-我们已经走了很远，但这个项目仍处于α-测试中，正在构建的过程中，API可能会发程变化，注意龙🐉..
+我们已经走了很远，但这个项目仍处于α-测试中，正在构建的过程中，API可能会发程变化，注意龙🐉...?
 
 **Want to get started?** Check our [examples folder](/examples) to learn how to spawn an IPFS node in Node.js and in the Browser.
 
@@ -192,7 +192,7 @@ You can also load it using a `<script>` using the [unpkg](https://unpkg.com) CDN
 <!-- loading the human-readable (not minified) version using unpkg -->
 <script src="https://unpkg.com/ipfs/dist/index.js"></script>
 ```
-**OR THIS:**
+**同样的:**
 
 ```html
 <!-- loading the minified version using jsDelivr -->
@@ -201,7 +201,7 @@ You can also load it using a `<script>` using the [unpkg](https://unpkg.com) CDN
 <!-- loading the human-readable (not minified) version jsDelivr -->
 <script src="https://cdn.jsdelivr.net/npm/ipfs/dist/index.js"></script>
 ```
-示例
+**示例**
 
 ```html
 <script>
@@ -264,42 +264,46 @@ You can find some examples and tutorials in the [examples](/examples) folder, th
 
 ### API
 
+> 主要翻译模块
+
 #### IPFS Constructor
 
 ```js
 const node = await IPFS.create([options])
 ```
 
-Creates and returns a ready to use instance of an IPFS node.
+创建并返回一个就绪的IPFS节点实例
 
-<details><summary>Alternative method to construct an IPFS node</summary>
+#### 可替代的创建一个IPFS节点的方法
 
-The recommended method of creating a new IPFS node is to use the `IPFS.create` method. However, IPFS is a `class`, and can also be constructed using the `new` keyword:
+The recommended method of creating a new IPFS node is to use the `IPFS.create` method. 
+创建一个新IPFS节点的推荐方法是，使用`IPFS.create`方法。然而，IPFS是一个`class`，并也能使用`new`关键字构造：
 
 ```js
 const node = new IPFS([options])
 ```
 
-At this point, your node has been created but is **not** ready to use. You must either attach a listener for the "ready" event _or_ wait for the `node.ready` promise to resolve:
+ You must either attach a listener for the "ready" event _or_ wait for the `node.ready` promise to resolve:
+对于这种方法，你的节点已经创建但**并没有**准备好被使用。你必须为"ready"事件添加一个listener，或者等待`node.ready`的promise被解析。
 
 ```js
 node.on('ready', () => { /* Node is now ready to use */ })
 // OR
 await node.ready
 ```
-</details>
 
-Use the `options` argument to specify advanced configuration. It is an object with any of these properties:
+Use the `options` argument to specify advanced configuration.
+使用`options`参数 提前的设置。它是一个带有以下任何字段(properties)的object。
 
 ##### `options.repo`
 
 | Type | Default |
 |------|---------|
-| string or [`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo) instance | `'~/.jsipfs'` in Node.js, `'ipfs'` in browsers |
+| string 或 [`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo) 实例 | Node.js中`'~/.jsipfs'`, 浏览器中`'ipfs'`  |
 
-The file path at which to store the IPFS node’s data. Alternatively, you can set up a customized storage system by providing an [`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo) instance.
+储存IPFS节点数据的文件路径。可替代的，你可以设置一个自定义的存储系统，使用提供一个[`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo)实例的方式
 
-Example:
+示例:
 
 ```js
 // Store data outside your user directory
@@ -312,27 +316,25 @@ const node = await IPFS.create({ repo: '/var/ipfs/data' })
 |------|---------|
 | boolean | `true` |
 
-`js-ipfs` comes bundled with a tool that automatically migrates your IPFS repository when a new version is available.
+`js-ipfs`绑定了一个自动migrate你的IPFS仓库的工具，当一个新版本是available。
 
-**For apps that build on top of `js-ipfs` and run in the browser environment, be aware that disabling automatic
-migrations leaves the user with no way to run the migrations because there is no CLI in the browser. In such
-a case, you should provide a way to trigger migrations manually.**
+**对于一个build on top of `js-ipfs`并在浏览器环境中运行的app来说，注意disable自动迁移会使用户无法运行迁移，因为在浏览器中没有CLI。在这种情况下，你应该提供一种手动触发迁移的方法。**
 
 ##### `options.init`
 
 | Type | Default |
 |------|---------|
-| boolean or object | `true` |
+| boolean 或 object | `true` |
 
-Initialize the repo when creating the IPFS node.
+创建IPFS节点时初始化仓库repo。
 
-If you have already initialized a repo before creating your IPFS node (e.g. you are loading a repo that was saved to disk from a previous run of your program), you must make sure to set this to `false`. Note that *initializing* a repo is different from creating an instance of [`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo). The IPFS constructor sets many special properties when initializing a repo, so you should usually not try and call `repoInstance.init()` yourself.
+如果在创建你的IPFS节点之前，你已经初始化了一个仓库（比如说，你正在加载一个存储在硬盘上from a previous run of your program的仓库），你一定要确保set this to `false`。注意：初始化一个repo不同于创建一个[`ipfs.Repo`](https://github.com/ipfs/js-ipfs-repo)示例。初始化一个仓库时，IPFS构造器设置了许多特殊的属性，所以通常情况下你自己不应该尝试调用`repoInstance.init()`。
 
-Instead of a boolean, you may provide an object with custom initialization options. All properties are optional:
+除了boolean，你也可以提供一个有自定义初始选项的object。所有的属性是可选的：
 
 - `emptyRepo` (boolean) Whether to remove built-in assets, like the instructional tour and empty mutable file system, from the repo. (Default: `false`)
-- `bits` (number) Number of bits to use in the generated key pair. (Default: `2048`)
-- `privateKey` (string/PeerId) A pre-generated private key to use. Can be either a base64 string or a [PeerId](https://github.com/libp2p/js-peer-id) instance. **NOTE: This overrides `bits`.**
+- `bits` (number) 用于生成key部分的bit位数量。(默认: `2048`)
+- `privateKey` (string/PeerId) A pre-generated private key to use. 可以是一个 base64 string 或一个[PeerId](https://github.com/libp2p/js-peer-id) 实例. **NOTE: This overrides `bits`.**
     ```js
     // Generating a Peer ID:
     const PeerId = require('peer-id')
@@ -342,7 +344,7 @@ Instead of a boolean, you may provide an object with custom initialization optio
     })
     ```
 - `pass` (string) A passphrase to encrypt keys. You should generally use the [top-level `pass` option](#optionspass) instead of the `init.pass` option (this one will take its value from the top-level option if not set).
-- `profiles` (Array) Apply profile settings to config.
+- `profiles` (Array) 将配置文件设置应用于配置。
 
 ##### `options.start`
 
@@ -350,7 +352,7 @@ Instead of a boolean, you may provide an object with custom initialization optio
 |------|---------|
 | boolean | `true` |
 
- If `false`, do not automatically start the IPFS node. Instead, you’ll need to manually call [`node.start()`](#nodestart) yourself.
+ 如果是 `false`, 则不会自动启动 IPFS 节点，需要你手动调用[`node.start()`](#nodestart)。
 
 ##### `options.pass`
 
@@ -358,7 +360,7 @@ Instead of a boolean, you may provide an object with custom initialization optio
 |------|---------|
 | string | `null` |
 
-A passphrase to encrypt/decrypt your keys.
+用于加密/解密密钥的密码。
 
 ##### `options.silent`
 
@@ -366,7 +368,7 @@ A passphrase to encrypt/decrypt your keys.
 |------|---------|
 | Boolean | `false` |
 
-Prevents all logging output from the IPFS node.
+阻止来自 IPFS 节点的所有日志记录输出。
 
 ##### `options.relay`
 
@@ -374,12 +376,12 @@ Prevents all logging output from the IPFS node.
 |------|---------|
 | object | `{ enabled: true, hop: { enabled: false, active: false } }` |
 
-Configure circuit relay (see the [circuit relay tutorial](https://github.com/ipfs/js-ipfs/tree/master/examples/circuit-relaying) to learn more).
+配置环路 circuit relay ( 详见 [circuit relay tutorial](https://github.com/ipfs/js-ipfs/tree/master/examples/circuit-relaying) ).
 
-- `enabled` (boolean): Enable circuit relay dialer and listener. (Default: `true`)
+- `enabled` (boolean): 使能 circuit relay dialer and listener. (默认: `true`)
 - `hop` (object)
-    - `enabled` (boolean): Make this node a relay (other nodes can connect *through* it). (Default: `false`)
-    - `active` (boolean): Make this an *active* relay node. Active relay nodes will attempt to dial a destination peer even if that peer is not yet connected to the relay. (Default: `false`)
+    - `enabled` (boolean): 使这个节点成为一个 relay (其他节点能够 connect *through* it). (默认: `false`)
+    - `active` (boolean): 使其成为一个 *active* relay 节点. Active relay 节点将试图 dial a destination peer ，即使那个 peer 仍未连接当前 relay. (Default: `false`)
 
 ##### `options.offline`
 
@@ -387,7 +389,7 @@ Configure circuit relay (see the [circuit relay tutorial](https://github.com/ipf
 |------|---------|
 | Boolean | `false` |
 
-Run ipfs node offline. The node does not connect to the rest of the network but provides a local API.
+脱机运行 ipfs 节点。节点不连接到网络的其余部分，但提供一个本地 API。
 
 ##### `options.preload`
 
@@ -395,10 +397,11 @@ Run ipfs node offline. The node does not connect to the rest of the network but 
 |------|---------|
 | object | `{ enabled: true, addresses: [...] }` |
 
-Configure remote preload nodes. The remote will preload content added on this node, and also attempt to preload objects requested by this node.
+配置远程预加载节点。远程将预加载在此节点上添加的内容，并尝试预加载此节点请求的对象。
 
-- `enabled` (boolean): Enable content preloading (Default: `true`)
-- `addresses` (array): Multiaddr API addresses of nodes that should preload content. **NOTE:** nodes specified here should also be added to your node's bootstrap address list at [`config.Boostrap`](#optionsconfig).
+- `enabled` (boolean): 启用内容预加载
+ (默认: `true`)
+- `addresses` (array): Multiaddr API 地址 of 应预加载内容的节点。 **注意:** 此处指定节点也应应添加到节点引导地址列表中 at [`config.Boostrap`](#optionsconfig).
 
 ##### `options.EXPERIMENTAL`
 
@@ -406,10 +409,11 @@ Configure remote preload nodes. The remote will preload content added on this no
 |------|---------|
 | object | `{ ipnsPubsub: false, sharding: false }` |
 
-Enable and configure experimental features.
+启动并配置实验性功能。
 
-- `ipnsPubsub` (boolean): Enable pub-sub on IPNS. (Default: `false`)
-- `sharding` (boolean): Enable directory sharding. Directories that have many child objects will be represented by multiple DAG nodes instead of just one. It can improve lookup performance when a directory has several thousand files or more. (Default: `false`)
+- `ipnsPubsub` (boolean): 启用 pub-sub 在 IPNS. (默认: `false`)
+- `sharding` (boolean): Enable directory sharding. Directories that have many child objects will be represented by multiple DAG nodes instead of just one. It can improve lookup performance when a directory has several thousand files or more. 启用目录分片。具有许多子对象的目录将由多个 DAG 节点表示，而不是仅一个节点。当目录有数千个或更多文件时，它可以提高查找性能。
+(默认: `false`)
 
 ##### `options.config`
 
@@ -417,7 +421,7 @@ Enable and configure experimental features.
 |------|---------|
 | object |  [`config-nodejs.js`](https://github.com/ipfs/js-ipfs/tree/master/src/core/runtime/config-nodejs.js) in Node.js, [`config-browser.js`](https://github.com/ipfs/js-ipfs/tree/master/src/core/runtime/config-browser.js) in browsers |
 
-Modify the default IPFS node config. This object will be *merged* with the default config; it will not replace it. The default config is documented in [the js-ipfs config file docs](docs/config.md).
+Modify the default IPFS node config. This object will be *merged* with the 默认配置; it will not replace it. 默认配置记录在 [the js-ipfs config file docs](docs/config.md).
 
 ###### Configuring Delegate Routers
 
@@ -630,7 +634,7 @@ node.on('error', errorObject => console.error(errorObject))
 
 #### `node.ready`
 
-A promise that resolves when the node is ready to use. Should be used when constructing an IPFS node using `new`. You don't need to use this if you're using [`await IPFS.create`](#ipfs-constructor). e.g.
+当节点就绪时一个 promise that resolves 。 Should be used 当使用 `new` 构建一个 IPFS 节点。 若使用 [`await IPFS.create`](#ipfs-constructor) 方式，则不必。示例：
 
 ```js
 const node = new IPFS()
@@ -640,9 +644,9 @@ await node.ready
 
 #### `node.start()`
 
-Start listening for connections with other IPFS nodes on the network. In most cases, you do not need to call this method — `IPFS.create()` will automatically do it for you.
+开始监听网络上其他 IPFS 节点的连接。大多数情况下，你不必使用此方法 — `IPFS.create()` 将自动帮你处理。
 
-This method is asynchronous and returns a promise.
+此方法是 asynchronous 并返回一个 promise.
 
 ```js
 const node = await IPFS.create({ start: false })
@@ -700,7 +704,7 @@ node.on('start', () => console.log('Node started!'))
 
 #### `node.stop()`
 
-Close and stop listening for connections with other IPFS nodes, then release access to the node’s repo.
+关闭并停止监听其他 IPFS 节点的连接，然后释放 access to the node’s repo.
 
 This method is asynchronous and returns a promise.
 
@@ -759,9 +763,9 @@ node.on('stop', () => console.log('Node stopped!'))
 
 [![](https://github.com/ipfs/interface-ipfs-core/raw/master/img/badge.png)](https://github.com/ipfs/interface-ipfs-core)
 
-The IPFS core API provides all functionality that is not specific to setting up and starting or stopping a node. This API is available directly on an IPFS instance, on the command line (when using the CLI interface), and as an HTTP REST API. For a complete reference, see [![](https://img.shields.io/badge/interface--ipfs--core-API%20Docs-blue.svg)](https://github.com/ipfs/interface-ipfs-core).
+IPFS 核心 API 提供不特定于设置和启动或停止节点的所有功能。此 API 直接在 IPFS 实例、命令行（使用 CLI 接口时）和 HTTP REST API 上可用。完整参考见 [![](https://img.shields.io/badge/interface--ipfs--core-API%20Docs-blue.svg)](https://github.com/ipfs/interface-ipfs-core).
 
-All the API methods aside from streaming methods (ones that end in `ReadableStream` or `PullStream`) are asynchronous and return Promises, but _also_ accept callbacks.
+所有的 API 方法 aside from streaming methods (ones that end in `ReadableStream` or `PullStream`) are asynchronous and return Promises, but _also_ 接受 callbacks.
 
 The core API is grouped into several areas:
 
@@ -1079,11 +1083,11 @@ Ask for help in our forum at https://discuss.ipfs.io or in IRC (#ipfs on Freenod
 
 ## Running js-ipfs with Docker
 
-We have automatic Docker builds setup with Docker Hub: https://hub.docker.com/r/ipfs/js-ipfs/
+我们使用 Docker Hub 进行自动 Docker 生成设置: https://hub.docker.com/r/ipfs/js-ipfs/
 
 All branches in the Github repository maps to a tag in Docker Hub, except `master` Git branch which is mapped to `latest` Docker tag.
 
-You can run js-ipfs like this:
+你可以这样启动 js-ipfs :
 
 ```
 $ docker run -it -p 4002:4002 -p 4003:4003 -p 5002:5002 -p 9090:9090 ipfs/js-ipfs:latest
@@ -1108,7 +1112,6 @@ Daemon is ready
 $ curl --silent localhost:5002/api/v0/id | jq .ID
 "Qmbd5jx8YF1QLhvwfLbCTWXGyZLyEJHrPbtbpRESvYs4FS"
 ```
-
 
 ## Packages
 
